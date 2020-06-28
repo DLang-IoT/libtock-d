@@ -6,7 +6,7 @@ CFLAGS              = -mtriple=thumb-none-linux-eabi -c -betterC -relocation-mod
 LIBFLAGS			= -lib
 
 # Final library name
-LIB_NAME			= libtock-d
+LIB_NAME			= libtock
 
 # Build directory name
 BUILD_DIR			= build
