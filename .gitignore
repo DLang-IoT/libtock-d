@@ -14,6 +14,12 @@
 # Executables
 *.exe
 
+# Applications
+*.elf
+*.tbf
+*.Map
+build/
+
 # DUB
 .dub
 docs.json
