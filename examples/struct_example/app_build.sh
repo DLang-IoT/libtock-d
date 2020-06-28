@@ -1,9 +1,0 @@
-#!/bin/bash
-
-ldc2 -mtriple=thumb-none-linux-eabi -mcpu=cortex-m4 -c -betterC -relocation-model=pic -Os -I../../libtock-d/ main.d -of build/cortex-m4/main.o
-
-arm-none-eabi-gcc -std=gnu11 -Wbad-function-cast -Wjump-misses-init  -Wmissing-prototypes -Wnested-externs  -Wold-style-definition  -frecord-gcc-switches -gdwarf-2 -Os -fdata-sections -ffunction-sections -fstack-usage -Wstack-usage=2048 -Wall -Wextra -Wl,--warn-common -Wl,--gc-sections -Wl,--emit-relocs -fPIC -include -Wdate-time  -Wfloat-equal  -Wformat-nonliteral -Wformat-security  -Wformat-y2k  -Winit-self  -Wlogical-op  -Wmissing-declarations -Wmissing-field-initializers  -Wmissing-format-attribute  -Wmissing-noreturn  -Wmultichar -Wpointer-arith  -Wredundant-decls  -Wshadow  -Wtrampolines  -Wunused-macros -Wunused-parameter  -Wwrite-strings -mthumb -mfloat-abi=soft -msingle-pic-base -mpic-register=r9 -mno-pic-data-is-text-relative -mcpu=cortex-m4 --entry=_start -Xlinker --defsym=STACK_SIZE=2048 -Xlinker --defsym=APP_HEAP_SIZE=1024 -Xlinker --defsym=KERNEL_HEAP_SIZE=1024 -T ../../userland_generic.ld -nostdlib -Wl,--start-group build/cortex-m4/main.o ../../libtock-d/build/cortex-m4/libtock.a ../../libtock/build/cortex-m4/libtock.a ../../newlib/cortex-m/libc.a ../../libc++/cortex-m/libgcc.a -Wl,-Map=build/cortex-m4/cortex-m4.Map -o build/cortex-m4/cortex-m4.elf
-
-elf2tab -n dlang --stack 2048 --app-heap 2048 --kernel-heap 1024 -v -o build/cortex-m4/dlang.tab build/cortex-m4/cortex-m4.elf
-
-# arm-none-eabi-objcopy --update-section .apps=/home/teona/D/libtock-d/libtock-c/d_examples/struct_example/build/cortex-m4/cortex-m4.tbf /home/teona/D/libtock-d/tock/target/thumbv7em-none-eabi/debug/nucleo_f429zi.elf /home/teona/D/libtock-d/tock/target/thumbv7em-none-eabi/debug/nucleo_f429zi-app.elf

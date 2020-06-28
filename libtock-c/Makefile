@@ -1,7 +1,7 @@
 # Makefile for building the C userspace library
 
 # Libtock-c root path
-LIBTOCK_SRC := ..
+LIBTOCK_SRC := .
 
 # Build directory name
 BUILD := build
