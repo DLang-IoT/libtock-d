@@ -27,7 +27,7 @@ CFLAGS              = -mtriple=thumb-none-linux-eabi -c -betterC -relocation-mod
 
 # Linker name, location and flags
 LD					= arm-none-eabi-gcc
-LINKER				= $(C_LIBTOCK)/src/libtock-c/userland_generic.ld
+LINKER				= $(C_LIBTOCK)/libtock-c/userland_generic.ld
 LDFLAGS				= -std=gnu11 -Wbad-function-cast -Wjump-misses-init  -Wmissing-prototypes -Wnested-externs  -Wold-style-definition  -frecord-gcc-switches -gdwarf-2 -Os -fdata-sections -ffunction-sections -fstack-usage -Wstack-usage=2048 -Wall -Wextra -Wl,--warn-common -Wl,--gc-sections -Wl,--emit-relocs -fPIC -include -Wdate-time  -Wfloat-equal  -Wformat-nonliteral -Wformat-security  -Wformat-y2k  -Winit-self  -Wlogical-op  -Wmissing-declarations -Wmissing-field-initializers  -Wmissing-format-attribute  -Wmissing-noreturn  -Wmultichar -Wpointer-arith  -Wredundant-decls  -Wshadow  -Wtrampolines  -Wunused-macros -Wunused-parameter  -Wwrite-strings -mthumb -mfloat-abi=soft -msingle-pic-base -mpic-register=r9 -mno-pic-data-is-text-relative --entry=_start -Xlinker --defsym=STACK_SIZE=2048 -Xlinker --defsym=APP_HEAP_SIZE=1024 -Xlinker --defsym=KERNEL_HEAP_SIZE=1024 -T $(LINKER) -nostdlib -Wl,--start-group
 
 # elf2tab flags and application name
@@ -55,7 +55,7 @@ define BUILD_ARCH
 
 # Create the architecture specific directory 
 $$(BUILD_DIR)/$(1):
-	@mkdir ip $(BUILD_DIR)/$(1)
+	@mkdir -p $(BUILD_DIR)/$(1)
 
 # Compile the source files and create the corresponding object files
 $$(BUILD_DIR)/$(1)/%.o: $(D_SRCS) | $$(BUILD_DIR)/$(1)
