@@ -1,0 +1,1 @@
+int pthread_create(pthread_t*, in pthread_attr_t*, void* function(void*), void*);

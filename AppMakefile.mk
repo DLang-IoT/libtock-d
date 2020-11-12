@@ -18,17 +18,21 @@ C_LIBRARY_NAME		= libtock-c
 D_LIBRARY_NAME		= libtock
 
 # C and C++ standard libraries names
-C_CPP_LIBR 			= libc libgcc
+C_CPP_LIBR 			= libc libgcc libm
+#librdimon librdpmon
 
+# D standard library
+D_LIBR				= runtime
+D_RUNTIME			= libdruntime-ldc pthread
 
 # Compiler name and compilation flags
 CC                 	= ldc2
-CFLAGS              = -mtriple=thumb-none-linux-eabi -c -betterC -relocation-model=pic -Os -I$(D_LIBTOCK)/ -I/usr/import/
+CFLAGS              = -mtriple=thumb-none-linux-eabi -c -relocation-model=pic -I$(D_LIBTOCK)/ -I/usr/import/
 
 # Linker name, location and flags
 LD					= arm-none-eabi-gcc
 LINKER				= $(C_LIBTOCK)/libtock-c/userland_generic.ld
-LDFLAGS				= -std=gnu11 -Wbad-function-cast -Wjump-misses-init  -Wmissing-prototypes -Wnested-externs  -Wold-style-definition  -frecord-gcc-switches -gdwarf-2 -Os -fdata-sections -ffunction-sections -fstack-usage -Wstack-usage=2048 -Wall -Wextra -Wl,--warn-common -Wl,--gc-sections -Wl,--emit-relocs -fPIC -include -Wdate-time  -Wfloat-equal  -Wformat-nonliteral -Wformat-security  -Wformat-y2k  -Winit-self  -Wlogical-op  -Wmissing-declarations -Wmissing-field-initializers  -Wmissing-format-attribute  -Wmissing-noreturn  -Wmultichar -Wpointer-arith  -Wredundant-decls  -Wshadow  -Wtrampolines  -Wunused-macros -Wunused-parameter  -Wwrite-strings -mthumb -mfloat-abi=soft -msingle-pic-base -mpic-register=r9 -mno-pic-data-is-text-relative --entry=_start -Xlinker --defsym=STACK_SIZE=2048 -Xlinker --defsym=APP_HEAP_SIZE=1024 -Xlinker --defsym=KERNEL_HEAP_SIZE=1024 -T $(LINKER) -nostdlib -Wl,--start-group
+LDFLAGS				= -std=gnu11 -Wbad-function-cast -Wjump-misses-init  -Wmissing-prototypes -Wnested-externs  -Wold-style-definition  -frecord-gcc-switches -gdwarf-2 -Os -fdata-sections -ffunction-sections -fstack-usage -Wstack-usage=2048 -Wall -Wextra -Wl,--warn-common -Wl,--gc-sections -Wl,--emit-relocs -fPIC -include -Wdate-time  -Wfloat-equal  -Wformat-nonliteral -Wformat-security  -Wformat-y2k  -Winit-self  -Wlogical-op  -Wmissing-declarations -Wmissing-field-initializers  -Wmissing-format-attribute  -Wmissing-noreturn  -Wmultichar -Wpointer-arith  -Wredundant-decls  -Wshadow  -Wtrampolines  -Wunused-macros -Wunused-parameter  -Wwrite-strings -mthumb -mfloat-abi=soft -msingle-pic-base -mpic-register=r9 -mno-pic-data-is-text-relative --entry=_start -Xlinker --defsym=STACK_SIZE=2048 -Xlinker --defsym=APP_HEAP_SIZE=1024 -Xlinker --defsym=KERNEL_HEAP_SIZE=1024 -T $(LINKER) -nostdlib
 
 # elf2tab flags and application name
 ELF 				= elf2tab
@@ -36,10 +40,14 @@ APP 				= app
 ELFFLAGS 			= -n app --stack 2048 --app-heap 2048 --kernel-heap 1024 -v
 
 # Target architectures
-TOCK_ARCHS			= cortex-m0 cortex-m3 cortex-m4
+TOCK_ARCHS			= cortex-m4
 
 # Standard libraries full paths
-STD_LIBR := $(foreach lang, $(C_CPP_LIBR), $(C_LIBRARY)/cortex-m/$(lang).a) 
+STD_LIBR := $(foreach lang, $(C_CPP_LIBR), $(C_LIBRARY)/cortex-m/$(lang).a)
+STD_LIBR += $(foreach libr, $(D_RUNTIME), $(USERLAND_ROOT)/$(D_LIBR)/cortex-m/$(libr).a)
+# STD_LIBR += $(USERLAND_ROOT)/$(D_LIBR)/cortex-m/$(D_RUNTIME).a
+
+$(info $(STD_LIBR))
 
 # Object files generated after compilation
 OBJS := $(foreach platform, $(TOCK_ARCHS), $(patsubst %.d,$(BUILD_DIR)/$(platform)/%.o,$(D_SRCS)))
@@ -72,7 +80,7 @@ endef
 define ELF_APP
 
 $$(BUILD_DIR)/$(1)/$(1).elf: $(OBJS)
-	@$(LD) -mcpu=$(1) $(LDFLAGS) $(OBJS) $$(LIBS_$(1)) $(STD_LIBR) -Wl,-Map=$(BUILD_DIR)/$(1)/$(1).Map -o $$@
+	@$(LD) -mcpu=$(1) $(LDFLAGS) -Wl,--start-group $(OBJS) $$(LIBS_$(1)) $(STD_LIBR) -Wl,--end-group -Wl,-Map=$(BUILD_DIR)/$(1)/$(1).Map -o $$@
 endef
 
 $(foreach platform, $(TOCK_ARCHS), $(eval $(call BUILD_ARCH,$(platform))))
