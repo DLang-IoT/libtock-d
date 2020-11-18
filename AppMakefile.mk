@@ -6,6 +6,9 @@ all:
 C_LIBTOCK			= $(USERLAND_ROOT)/libtock-c
 D_LIBTOCK			= $(USERLAND_ROOT)/libtock
 
+# D standard runtime
+D_RUNTIME_SRC			= /home/tock/runtime_thumb/ldc-build-runtime.tmp/ldc-src/runtime/druntime/src/
+
 # Build directory name
 BUILD_DIR			= build
 
@@ -27,7 +30,7 @@ D_RUNTIME			= libdruntime-ldc pthread
 
 # Compiler name and compilation flags
 CC                 	= ldc2
-CFLAGS              = -mtriple=thumb-none-linux-eabi -c -relocation-model=pic -I$(D_LIBTOCK)/ -I/usr/import/
+CFLAGS              = -mtriple=thumb-none-linux-eabi -c -relocation-model=pic -I$(D_LIBTOCK)/ -I/usr/import/ -I$(D_RUNTIME_SRC)
 
 # Linker name, location and flags
 LD					= arm-none-eabi-gcc

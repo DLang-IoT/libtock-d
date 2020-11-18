@@ -1,8 +1,9 @@
-module main; 
+module main_module; 
 import tock;
-import core.stdc.stdio;
+import core.std.stdio;
 
 extern(C) int main() {
-    printf("Hello, world!\n");
+	writeln("hello, world!\n");
+   // printf("Hello, world!\n");
     return 0;
 }
