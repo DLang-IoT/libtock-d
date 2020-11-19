@@ -29,7 +29,7 @@ D_LIBR				= runtime
 
 # Compiler name and compilation flags
 CC                 	= ldc2
-CFLAGS              	= -mtriple=thumb-none-linux-eabi -c -relocation-model=pic -I$(D_LIBTOCK)/ -I/usr/import/ -I$(D_RUNTIME_SRC)
+CFLAGS              	= -betterC -mtriple=thumb-none-linux-eabi -c -relocation-model=pic -I$(D_LIBTOCK)/ -I/usr/import/ -I$(D_RUNTIME_SRC)
 
 # Linker name, location and flags
 LD					= arm-none-eabi-gcc

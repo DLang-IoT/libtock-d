@@ -26,6 +26,7 @@ C_CPP_LIBR 			= libc libgcc libm
 
 # D standard library
 D_LIBR				= runtime
+D_RUNTIME			= libdruntime-ldc pthread
 
 # Compiler name and compilation flags
 CC                 	= ldc2
@@ -46,6 +47,7 @@ TOCK_ARCHS			= cortex-m4
 
 # Standard libraries full paths
 STD_LIBR := $(foreach lang, $(C_CPP_LIBR), $(C_LIBRARY)/cortex-m/$(lang).a)
+STD_LIBR += $(foreach libr, $(D_RUNTIME), $(USERLAND_ROOT)/$(D_LIBR)/cortex-m/$(libr).a)
 
 # Object files generated after compilation
 OBJS := $(foreach platform, $(TOCK_ARCHS), $(patsubst %.d,$(BUILD_DIR)/$(platform)/%.o,$(D_SRCS)))
