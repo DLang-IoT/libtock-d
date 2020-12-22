@@ -46,7 +46,6 @@ TOCK_ARCHS			= cortex-m4
 
 # Standard libraries full paths
 STD_LIBR := $(foreach lang, $(C_CPP_LIBR), $(C_LIBRARY)/cortex-m/$(lang).a)
-$(info $(STD_LIBR))
 
 # Object files generated after compilation
 OBJS := $(foreach platform, $(TOCK_ARCHS), $(patsubst %.d,$(BUILD_DIR)/$(platform)/%.o,$(D_SRCS)))

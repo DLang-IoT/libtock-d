@@ -80,7 +80,7 @@ endef
 define ELF_APP
 
 $$(BUILD_DIR)/$(1)/$(1).elf: $(OBJS)
-	$(LD) -mcpu=$(1) $(LDFLAGS) -Wl,--start-group $(OBJS) $$(LIBS_$(1)) $(STD_LIBR) -Wl,--end-group -Wl,-Map=$(BUILD_DIR)/$(1)/$(1).Map -o $$@
+	@$(LD) -mcpu=$(1) $(LDFLAGS) -Wl,--start-group $(OBJS) $$(LIBS_$(1)) $(STD_LIBR) -Wl,--end-group -Wl,-Map=$(BUILD_DIR)/$(1)/$(1).Map -o $$@
 endef
 
 $(foreach platform, $(TOCK_ARCHS), $(eval $(call BUILD_ARCH,$(platform))))
