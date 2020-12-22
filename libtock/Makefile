@@ -2,7 +2,7 @@
 
 # Compiler name and flags
 CC                 	= ldc2 # compiler name
-CFLAGS              = -mtriple=thumb-none-linux-eabi -c -betterC -relocation-model=pic -Os
+CFLAGS              = -mtriple=thumb-none-linux-eabi -c -betterC -relocation-model=pic -Os --gcc=arm-none-eabi-gcc -Xcc=-msingle-pic-base -Xcc=-mpic-register=r9 -Xcc=-mno-pic-data-is-text-relative
 LIBFLAGS			= -lib
 
 # Final library name

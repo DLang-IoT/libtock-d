@@ -5,4 +5,4 @@ USERLAND_ROOT 		= ../..
 D_SRCS = $(wildcard *.d)
 
 # Include the general applicaton makefile that compiles and builds the userland application
-include $(USERLAND_ROOT)/AppMakefile.mk
+include $(USERLAND_ROOT)/AppMakefile_betterC.mk
